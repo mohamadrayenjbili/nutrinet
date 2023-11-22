@@ -35,14 +35,14 @@ class UserC
     function addUser($User)
     {
         $sql = "INSERT INTO User  
-        VALUES (NULL, :nom,:prenom, :addresse,:tel)";
+        VALUES (NULL, :nom,:prenom, :adresse,:tel)";
         $db = config::getConnexion();
         try {
             $query = $db->prepare($sql);
             $query->execute([
                 'nom' => $User->getNom(),
                 'prenom' => $User->getPrenom(),
-                'addresse' => $User->getaddresse(),
+                'adresse' => $User->getadresse(),
                 'tel' => $User->getTel(),
             ]);
         } catch (Exception $e) {
@@ -65,30 +65,44 @@ class UserC
         }
     }
 
-    function updateUser($User, $id)
+    function updateUser($id)
     {   
         try {
             $db = config::getConnexion();
-            $query = $db->prepare(
+            
+            // Fetch the user by ID
+            $selectQuery = $db->prepare('SELECT * FROM User WHERE idUser = :idUser');
+            $selectQuery->execute(['idUser' => $id]);
+            $user = $selectQuery->fetch(PDO::FETCH_ASSOC);
+    
+            // Check if the user exists
+            if (!$user) {
+                echo "User with ID $id not found";
+                return;
+            }
+            
+            // Update the user fields
+            $updateQuery = $db->prepare(
                 'UPDATE User SET 
                     nom = :nom, 
                     prenom = :prenom, 
-                    addresse = :addresse, 
+                    adresse = :adresse, 
                     tel = :tel
-                WHERE idUser= :idUser'
+                WHERE idUser = :idUser'
             );
             
-            $query->execute([
+            $updateQuery->execute([
                 'idUser' => $id,
-                'nom' => $User->getNom(),
-                'prenom' => $User->getPrenom(),
-                'addresse' => $User->getaddresse(),
-                'tel' => $User->getTel(),
+                'nom' => $user['nom'],
+                'prenom' => $user['prenom'], 
+                'adresse' => $user['adresse'],
+                'tel' => $user['tel'],      
             ]);
             
-            echo $query->rowCount() . " records UPDATED successfully <br>";
+            echo $updateQuery->rowCount() . " records UPDATED successfully <br>";
         } catch (PDOException $e) {
-            $e->getMessage();
+            echo $e->getMessage();
         }
     }
+    
 }

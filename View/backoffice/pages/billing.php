@@ -286,7 +286,7 @@ $users = $user->listUsers();
                             <h6 class="mb-3 text-sm"><?= $user['prenom']; ?></h6>
                           </div>
                           <div class="ms-auto d-flex flex-column">
-                            <h6 class="mb-3 text-sm"><?= $user['addresse']; ?></h6>
+                            <h6 class="mb-3 text-sm"><?= $user['adresse']; ?></h6>
                           </div>
                           <div class="ms-auto d-flex flex-column">
                             <h6 class="mb-3 text-sm"><?= $user['tel']; ?></h6>
@@ -296,7 +296,7 @@ $users = $user->listUsers();
                             <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="deleteUser.php?idUser=<?php echo $user['idUser']; ?>">
                               <i class="material-icons text-sm me-2">delete</i>Delete
                             </a>
-                            <a class="btn btn-link text-dark px-3 mb-0" href="javascript:;">
+                            <a class="btn btn-link text-danger text-gradient px-3 mb-0" href="updateUser.php?idUser=<?php echo $user['idUser']; ?>">
                               <i class="material-icons text-sm me-2">edit</i>Edit
                             </a>
                           </div>

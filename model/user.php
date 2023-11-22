@@ -4,7 +4,7 @@ class User
     private ?int $idUser = null;
     private ?string $nom = null;
     private ?string $prenom = null;
-    private ?string $addresse = null;
+    private ?string $adresse = null;
     private ?string $tel = null;
 
     public function __construct($id = null, $n, $p, $a, $d)
@@ -12,7 +12,7 @@ class User
         $this->idUser = $id;
         $this->nom = $n;
         $this->prenom = $p;
-        $this->addresse = $a;
+        $this->adresse = $a;
         $this->tel = $d;
     }
 
@@ -51,15 +51,15 @@ class User
     }
 
 
-    public function getaddresse()
+    public function getadresse()
     {
-        return $this->addresse;
+        return $this->adresse;
     }
 
 
-    public function setaddresse($addresse)
+    public function setadresse($adresse)
     {
-        $this->addresse = $addresse;
+        $this->adresse = $adresse;
 
         return $this;
     }
