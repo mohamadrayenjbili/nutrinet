@@ -300,48 +300,63 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </form>
 
     <script>
-        function validerFormulaire() {
-            // Réinitialiser les messages d'erreur
-            document.getElementById('errorNom').innerHTML = '';
-            document.getElementById('errorPrenom').innerHTML = '';
-            document.getElementById('errorAdresse').innerHTML = '';
-            document.getElementById('errorTelephone').innerHTML = '';
+        function validerFormulaire(event) {
+    // Réinitialiser les messages d'erreur
+    document.getElementById('errorNom').innerHTML = '';
+    document.getElementById('errorPrenom').innerHTML = '';
+    document.getElementById('errorAdresse').innerHTML = '';
+    document.getElementById('errorTelephone').innerHTML = '';
 
-            // Récupérer les valeurs des champs
-            var nom = document.getElementById('nom').value;
-            var prenom = document.getElementById('prenom').value;
-            var adresse = document.getElementById('adresse').value;
-            var telephone = document.getElementById('telephone').value;
+    // Récupérer les valeurs des champs
+    var nom = document.getElementById('nom').value;
+    var prenom = document.getElementById('prenom').value;
+    var adresse = document.getElementById('adresse').value;
+    var telephone = document.getElementById('telephone').value;
 
-            // Validation simple côté client
-            var erreurs = false;
+    // Validation simple côté client
+    var erreurs = false;
 
-            if (nom.trim() === '') {
-                document.getElementById('errorNom').innerHTML = 'Veuillez saisir votre nom.';
-                erreurs = true;
-            }
+    if (nom.trim() === '') {
+        document.getElementById('errorNom').innerHTML = 'Veuillez saisir votre nom.';
+        erreurs = true;
+    } else if (!/^[a-zA-Z]+$/.test(nom)) {
+        document.getElementById('errorNom').innerHTML = 'Le nom doit contenir uniquement des lettres.';
+        erreurs = true;
+    }
 
-            if (prenom.trim() === '') {
-                document.getElementById('errorPrenom').innerHTML = 'Veuillez saisir votre prénom.';
-                erreurs = true;
-            }
+    if (prenom.trim() === '') {
+        document.getElementById('errorPrenom').innerHTML = 'Veuillez saisir votre prénom.';
+        erreurs = true;
+    } else if (!/^[a-zA-Z]+$/.test(prenom)) {
+        document.getElementById('errorPrenom').innerHTML = 'Le prénom doit contenir uniquement des lettres.';
+        erreurs = true;
+    }
 
-            if (adresse.trim() === '') {
-                document.getElementById('errorAdresse').innerHTML = 'Veuillez saisir votre adresse.';
-                erreurs = true;
-            }
+    if (adresse.trim() === '') {
+        document.getElementById('errorAdresse').innerHTML = 'Veuillez saisir votre adresse.';
+        erreurs = true;
+    }
 
-            if (!/^\d{8}$/.test(telephone)) {
-                document.getElementById('errorTelephone').innerHTML = 'Veuillez saisir un numéro de téléphone valide (8 chiffres).';
-                erreurs = true;
-            }
+    if (!/^\d{8}$/.test(telephone)) {
+        document.getElementById('errorTelephone').innerHTML = 'Veuillez saisir un numéro de téléphone valide (8 chiffres).';
+        erreurs = true;
+    }
 
-            // Envoyer le formulaire si aucune erreur n'est détectée
-            if (!erreurs) {
-                // Vous pouvez ajouter ici le code pour envoyer les données à votre serveur
-                alert('Formulaire soumis avec succès !');
-            }
-        }
+    // Annuler la soumission du formulaire s'il y a des erreurs
+    if (erreurs) {
+        event.preventDefault(); // Annuler la soumission du formulaire
+    } else {
+        // Envoyer le formulaire si aucune erreur n'est détectée
+        // Vous pouvez ajouter ici le code pour envoyer les données à votre serveur
+        alert('Formulaire soumis avec succès !');
+    }
+}
+
+   // Ajouter un écouteur d'événement sur le formulaire
+   var contactForm = document.getElementById('contactForm');
+   contactForm.addEventListener('submit', validerFormulaire);
+      
+
     </script>
 
 

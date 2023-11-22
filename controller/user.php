@@ -1,7 +1,6 @@
 <?php
 
 require __DIR__ . '/../config.php';
-    
 class UserC
 {
 
@@ -65,44 +64,30 @@ class UserC
         }
     }
 
-    function updateUser($id)
+    function updateUser($User, $id)
     {   
         try {
             $db = config::getConnexion();
-            
-            // Fetch the user by ID
-            $selectQuery = $db->prepare('SELECT * FROM User WHERE idUser = :idUser');
-            $selectQuery->execute(['idUser' => $id]);
-            $user = $selectQuery->fetch(PDO::FETCH_ASSOC);
-    
-            // Check if the user exists
-            if (!$user) {
-                echo "User with ID $id not found";
-                return;
-            }
-            
-            // Update the user fields
-            $updateQuery = $db->prepare(
+            $query = $db->prepare(
                 'UPDATE User SET 
                     nom = :nom, 
                     prenom = :prenom, 
                     adresse = :adresse, 
                     tel = :tel
-                WHERE idUser = :idUser'
+                WHERE idUser= :idUser'
             );
             
-            $updateQuery->execute([
+            $query->execute([
                 'idUser' => $id,
-                'nom' => $user['nom'],
-                'prenom' => $user['prenom'], 
-                'adresse' => $user['adresse'],
-                'tel' => $user['tel'],      
+                'nom' => $User->getNom(),
+                'prenom' => $User->getPrenom(),
+                'adresse' => $User->getadresse(),
+                'tel' => $User->getTel(),
             ]);
             
-            echo $updateQuery->rowCount() . " records UPDATED successfully <br>";
+            echo $query->rowCount() . " records UPDATED successfully <br>";
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            $e->getMessage();
         }
     }
-    
 }
